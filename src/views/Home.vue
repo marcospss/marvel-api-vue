@@ -1,10 +1,12 @@
 <template>
-  <div class="home"><h1>HOME</h1></div>
+  <Grid />
 </template>
 
 <script>
+import Grid from '@/components/Grid'
+
 export default {
   name: 'Home',
-  components: {}
+  components: { Grid }
 }
 </script>

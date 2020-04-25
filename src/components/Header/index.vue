@@ -17,7 +17,7 @@
   </nav>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 nav {
   font-size: 1.6rem;
   text-align: center;

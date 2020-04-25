@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <Header />
-    <router-view />
+    <div class="container">
+      <router-view />
+    </div>
   </div>
 </template>
 
@@ -15,5 +17,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@/assets/styles/reset.scss';
+@import '@/assets/styles/index.scss';
 </style>

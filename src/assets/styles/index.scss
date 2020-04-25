@@ -10,3 +10,12 @@ body {
 * {
     box-sizing: border-box;
 }
+
+.container {
+    max-width: 1200px;
+    margin: 20px auto 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
