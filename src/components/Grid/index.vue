@@ -1,43 +1,39 @@
 <template>
   <div class="grid">
-    <figure key="{id}">
-      <router-link to="/details">
-        <img
-          src="http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg"
-          alt="3-D Man"
-        />
-        <figcaption>3-D Man</figcaption>
-      </router-link>
-    </figure>
-    <figure key="{id}">
-      <router-link to="/details">
-        <img
-          src="http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg"
-          alt="3-D Man"
-        />
-        <figcaption>3-D Man</figcaption>
-      </router-link>
-    </figure>
-    <figure key="{id}">
-      <router-link to="/details">
-        <img
-          src="http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg"
-          alt="3-D Man"
-        />
-        <figcaption>3-D Man</figcaption>
+    <figure v-for="character in characters" :key="character.id">
+      <router-link
+        tag="a"
+        :to="{ name: 'Details', params: { id: character.id } }"
+      >
+        <img :src="getPathImage(character.thumbnail)" :alt="character.name" />
+        <figcaption>{{ character.name }}</figcaption>
       </router-link>
     </figure>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  name: 'Grid',
+  props: {
+    characters: {
+      type: Array,
+      default: () => []
+    }
+  },
+  methods: {
+    getPathImage(thumbnail) {
+      const { path, extension } = thumbnail
+      return `${path}.${extension}`
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   padding: 25px;
   grid-gap: 25px;
   grid-auto-flow: dense;
