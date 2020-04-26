@@ -2,29 +2,51 @@
   <div class="details">
     <header>
       <router-link to="/">Voltar para home</router-link>
-      <h2>3-D Man</h2>
+      <h2>{{ details.name }}</h2>
       <img
-        src="http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg"
-        alt="3-D Man"
+        :src="details.thumbnail && getPathImage(details.thumbnail)"
+        :alt="details.name"
       />
-      <p>
-        Based on the global blockbuster videogame franchise from Sega, Sonic the
-        Hedgehog tells the story of the world’s speediest hedgehog as he
-        embraces his new home on Earth. In this live-action adventure comedy,
-        Sonic and his new best friend team up to defend the planet from the evil
-        genius Dr. Robotnik and his plans for world domination.
-      </p>
+      <p>{{ details.description }}</p>
     </header>
-    <SeriesGrid />
+    <SeriesGrid :series="series.results" />
   </div>
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
 import SeriesGrid from '@/components/SeriesGrid'
 
 export default {
   name: 'Details',
-  components: { SeriesGrid }
+  props: {
+    id: {
+      type: Number,
+      default: 0
+    }
+  },
+
+  components: { SeriesGrid },
+  async created() {
+    await this.loadDetails(this.id)
+    await this.loadSeries(this.id)
+  },
+  methods: {
+    ...mapActions(['getCharactersByIdAction', 'getSeriesCharactersByIdAction']),
+    async loadDetails(id) {
+      await this.getCharactersByIdAction(id)
+    },
+    async loadSeries(id) {
+      await this.getSeriesCharactersByIdAction(id)
+    },
+    getPathImage(thumbnail) {
+      const { path, extension } = thumbnail
+      return `${path}.${extension}`
+    }
+  },
+  computed: {
+    ...mapState(['details', 'series'])
+  }
 }
 </script>
 

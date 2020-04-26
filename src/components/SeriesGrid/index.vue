@@ -2,33 +2,30 @@
   <div class="series-grid">
     <h2>Series</h2>
     <div class="grid">
-      <figure>
-        <img
-          src="http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg"
-          alt="3-D Man"
-        />
-        <figcaption>3-D Man</figcaption>
-      </figure>
-      <figure>
-        <img
-          src="http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg"
-          alt="3-D Man"
-        />
-        <figcaption>3-D Man</figcaption>
-      </figure>
-      <figure>
-        <img
-          src="http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg"
-          alt="3-D Man"
-        />
-        <figcaption>3-D Man</figcaption>
+      <figure v-for="serie in series" :key="serie.id">
+        <img :src="getPathImage(serie.thumbnail)" :alt="serie.title" />
+        <figcaption>{{ serie.title }}</figcaption>
       </figure>
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  name: 'SeriesGrid',
+  props: {
+    series: {
+      type: Array,
+      default: () => []
+    }
+  },
+  methods: {
+    getPathImage(thumbnail) {
+      const { path, extension } = thumbnail
+      return `${path}.${extension}`
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>

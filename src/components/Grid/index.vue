@@ -33,9 +33,9 @@ export default {
 <style lang="scss" scoped>
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  padding: 25px;
-  grid-gap: 25px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  padding: 0px;
+  grid-gap: 0px;
   grid-auto-flow: dense;
   align-items: stretch;
   width: 100%;

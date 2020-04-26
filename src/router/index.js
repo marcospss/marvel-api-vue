@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import NotFound from '../views/NotFound.vue'
 
 Vue.use(VueRouter)
+const parseProps = routerObject => ({ id: parseInt(routerObject.params.id) })
 
 const routes = [
   {
@@ -14,6 +15,7 @@ const routes = [
   {
     path: '/details/:id',
     name: 'Details',
+    props: parseProps,
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
