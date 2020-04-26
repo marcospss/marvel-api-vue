@@ -14,6 +14,7 @@
   align-items: center;
   position: fixed;
   top: 0;
+  left: 0;
   background: #00000045;
   .loader {
     border: 16px solid #f3f3f3;

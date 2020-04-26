@@ -1,6 +1,7 @@
 <template>
   <div class="details">
-    <header>
+    <Loading v-if="isLoading" />
+    <header v-show="!isLoading">
       <router-link to="/">Voltar para home</router-link>
       <h2>{{ details.name }}</h2>
       <img
@@ -9,12 +10,16 @@
       />
       <p>{{ details.description }}</p>
     </header>
-    <SeriesGrid :series="series.results" />
+    <SeriesGrid
+      v-if="!isLoading && !!series.results.length"
+      :series="series.results"
+    />
   </div>
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex'
+import Loading from '@/components/Loading'
 import SeriesGrid from '@/components/SeriesGrid'
 
 export default {
@@ -25,8 +30,12 @@ export default {
       default: 0
     }
   },
-
-  components: { SeriesGrid },
+  data() {
+    return {
+      isLoading: false
+    }
+  },
+  components: { Loading, SeriesGrid },
   async created() {
     await this.loadDetails(this.id)
     await this.loadSeries(this.id)
@@ -34,7 +43,9 @@ export default {
   methods: {
     ...mapActions(['getCharactersByIdAction', 'getSeriesCharactersByIdAction']),
     async loadDetails(id) {
+      this.isLoading = true
       await this.getCharactersByIdAction(id)
+      this.isLoading = false
     },
     async loadSeries(id) {
       await this.getSeriesCharactersByIdAction(id)

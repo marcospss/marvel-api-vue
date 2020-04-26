@@ -40,7 +40,7 @@ const actions = {
 }
 
 const getters = {
-  getCharactersPage: state => state.characters.page
+  getCharactersNextPage: state => state.characters.offset
 }
 
 export default new Vuex.Store({
