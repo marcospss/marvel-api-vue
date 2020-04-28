@@ -2,13 +2,14 @@
   <div>
     <Loading v-if="isLoading" />
     <Grid v-show="!isLoading" :characters="characters.results" />
-    <hr />
     <p>{{ characters.offset }}</p>
   </div>
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
+
+const { mapGetters } = createNamespacedHelpers('characters')
 import Loading from '@/components/Loading'
 import Grid from '@/components/Grid'
 
@@ -24,7 +25,9 @@ export default {
     await this.loadCharacters()
   },
   methods: {
-    ...mapActions(['getCharactersAction']),
+    getCharactersAction() {
+      this.$store.dispatch('characters/getCharactersAction')
+    },
     async loadCharacters() {
       this.isLoading = true
       await this.getCharactersAction()
@@ -32,7 +35,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['characters'])
+    ...mapGetters(['characters'])
   }
 }
 </script>

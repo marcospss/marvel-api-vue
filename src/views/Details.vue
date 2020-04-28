@@ -11,14 +11,16 @@
       <p>{{ details.description }}</p>
     </header>
     <SeriesGrid
-      v-if="!isLoading && !!series.results.length"
+      v-if="!isLoading && !!(series && series.results && series.results.length)"
       :series="series.results"
     />
   </div>
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
+const { mapGetters, mapActions } = createNamespacedHelpers('details')
+
 import Loading from '@/components/Loading'
 import SeriesGrid from '@/components/SeriesGrid'
 
@@ -56,7 +58,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['details', 'series'])
+    ...mapGetters(['details', 'series'])
   }
 }
 </script>
@@ -68,7 +70,8 @@ export default {
   align-items: flex-start;
   background-color: #fff;
   position: relative;
-  max-width: 100%;
+  width: 100%;
+  max-width: 1200px;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
     0 4px 6px -2px rgba(0, 0, 0, 0.05);
   border-radius: 1rem;
