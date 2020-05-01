@@ -1,5 +1,5 @@
 import mockAxios from 'axios'
-import characters from '@/store/modules/characters'
+import series from '@/store/modules/series'
 import { CHARACTERS } from '@/store/mutationTypes'
 
 const listResults = {
@@ -11,7 +11,7 @@ const listResults = {
     results: [
       {
         id: 1011334,
-        name: '3-D Man',
+        title: '3-D Man',
         description: '',
         modified: '2014-04-29T14:18:17-0400',
         thumbnail: {
@@ -23,10 +23,10 @@ const listResults = {
   }
 }
 
-describe('CHARACTERS - Store', () => {
+describe('SERIES - Store', () => {
   describe('Mutations', () => {
     const state = {
-      characters: {
+      series: {
         offset: 0,
         limit: 10,
         total: 0,
@@ -34,7 +34,7 @@ describe('CHARACTERS - Store', () => {
         results: []
       }
     }
-    it(`mutations/${CHARACTERS.GET_LIST}`, () => {
+    it(`mutations/${CHARACTERS.GET_SERIES_BY_ID}`, () => {
       const response = {
         offset: 0,
         limit: 10,
@@ -42,17 +42,17 @@ describe('CHARACTERS - Store', () => {
         count: 0,
         results: []
       }
-      characters.mutations[CHARACTERS.GET_LIST](state, response)
-      expect(state.characters.offset).toEqual(10)
-      expect(state.characters.limit).toEqual(10)
-      expect(state.characters.total).toEqual(0)
-      expect(state.characters.count).toEqual(0)
-      expect(state.characters.results).toEqual([])
+      series.mutations[CHARACTERS.GET_SERIES_BY_ID](state, response)
+      expect(state.series.offset).toEqual(0)
+      expect(state.series.limit).toEqual(10)
+      expect(state.series.total).toEqual(0)
+      expect(state.series.count).toEqual(0)
+      expect(state.series.results).toEqual([])
     })
   })
 
   describe('Actions', () => {
-    const resultCharacters = {
+    const resultSeries = {
       count: 1,
       limit: 10,
       offset: 0,
@@ -61,7 +61,7 @@ describe('CHARACTERS - Store', () => {
           description: '',
           id: 1011334,
           modified: '2014-04-29T14:18:17-0400',
-          name: '3-D Man',
+          title: '3-D Man',
           thumbnail: {
             extension: 'jpg',
             path: 'http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784'
@@ -73,14 +73,14 @@ describe('CHARACTERS - Store', () => {
     const resp = { data: listResults }
     mockAxios.get.mockImplementationOnce(() => Promise.resolve(resp))
 
-    it('actions/getCharactersAction', async () => {
+    it('actions/fetchesSeriesCharactersById', async () => {
       const context = {
         commit: jest.fn()
       }
-      await characters.actions.getCharactersAction(context)
+      await series.actions.getSeriesCharactersByIdAction(context)
       expect(context.commit).toHaveBeenCalledWith(
-        CHARACTERS.GET_LIST,
-        resultCharacters
+        CHARACTERS.GET_SERIES_BY_ID,
+        resultSeries
       )
       expect(mockAxios.get).toHaveBeenCalledTimes(1)
     })
@@ -88,7 +88,7 @@ describe('CHARACTERS - Store', () => {
 
   describe('Getters', () => {
     const state = {
-      characters: {
+      series: {
         offset: 0,
         limit: 10,
         total: 1,
@@ -96,7 +96,7 @@ describe('CHARACTERS - Store', () => {
         results: [
           {
             id: 1011334,
-            name: '3-D Man',
+            title: '3-D Man',
             description: '',
             modified: '2014-04-29T14:18:17-0400',
             thumbnail: {
@@ -108,8 +108,8 @@ describe('CHARACTERS - Store', () => {
       }
     }
 
-    it('getters/characters', () => {
-      expect(characters.getters.characters(state)).toEqual({
+    it('getters/series', () => {
+      expect(series.getters.series(state)).toEqual({
         offset: 0,
         limit: 10,
         total: 1,
@@ -117,7 +117,7 @@ describe('CHARACTERS - Store', () => {
         results: [
           {
             id: 1011334,
-            name: '3-D Man',
+            title: '3-D Man',
             description: '',
             modified: '2014-04-29T14:18:17-0400',
             thumbnail: {
@@ -127,9 +127,6 @@ describe('CHARACTERS - Store', () => {
           }
         ]
       })
-    })
-    it('getters/getCharactersNextPage', () => {
-      expect(characters.getters.getCharactersNextPage(state)).toEqual(0)
     })
   })
 })
