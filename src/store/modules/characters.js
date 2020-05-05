@@ -6,11 +6,18 @@ const characters = {
   state: {
     isFirstLoad: false,
     nextPage: 0,
-    characters: {}
+    characters: {
+      results: []
+    }
   },
   mutations: {
     [CHARACTERS.GET_LIST](state, characters) {
+      const loadedCharacters = state.characters.results
       state.characters = characters
+      state.characters.results = [
+        ...loadedCharacters,
+        ...state.characters.results
+      ]
       state.nextPage += 10
       state.isFirstLoad = true
     }

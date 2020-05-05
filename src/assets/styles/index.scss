@@ -19,3 +19,21 @@ body {
     justify-content: center;
     align-items: center;
 }
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-action {
+    margin: 1rem auto;
+    width: 300px;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 2rem;
+    outline: none;
+    font-weight: bold;
+    text-transform: uppercase;
+}
