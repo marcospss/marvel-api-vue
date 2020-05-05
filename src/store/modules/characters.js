@@ -4,23 +4,29 @@ import { characters as charactersService } from '@/services'
 const characters = {
   namespaced: true,
   state: {
+    isFirstLoad: false,
+    nextPage: 0,
     characters: {}
   },
   mutations: {
     [CHARACTERS.GET_LIST](state, characters) {
       state.characters = characters
-      state.characters.offset += 10
+      state.nextPage += 10
+      state.isFirstLoad = true
     }
   },
   actions: {
-    async getCharactersAction({ commit }) {
-      const characters = await charactersService.fetchesListsCharacters()
+    async getCharactersAction({ commit }, nextPage) {
+      const characters = await charactersService.fetchesListsCharacters(
+        nextPage
+      )
       commit(CHARACTERS.GET_LIST, characters)
     }
   },
   getters: {
     characters: state => state.characters,
-    getCharactersNextPage: state => state.characters.offset
+    nextPage: state => state.nextPage,
+    isFirstLoad: state => state.isFirstLoad
   }
 }
 
