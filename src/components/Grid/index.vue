@@ -6,7 +6,7 @@
         :to="{ name: 'Details', params: { id: character.id } }"
       >
         <img :src="getPathImage(character.thumbnail)" :alt="character.name" />
-        <figcaption>{{ character.name }}</figcaption>
+        <figcaption v-once>{{ character.name }}</figcaption>
       </router-link>
     </figure>
   </div>
@@ -18,7 +18,8 @@ export default {
   props: {
     characters: {
       type: Array,
-      default: () => []
+      default: () => [],
+      required: true
     }
   },
   methods: {

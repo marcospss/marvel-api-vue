@@ -16,7 +16,8 @@ export default {
   props: {
     series: {
       type: Array,
-      default: () => []
+      default: () => [],
+      required: true
     }
   },
   methods: {

@@ -1,7 +1,20 @@
 <template>
   <div class="wrapper">
     <Loading v-if="isLoading" />
-    <Grid v-show="!isLoading" :characters="characters.results" />
+    <form role="search" class="search-character" @submit="onSubmitForm">
+      <fieldset>
+        <legend>Pesquisar personagem</legend>
+        <input
+          v-model="query"
+          type="text"
+          name="query"
+          id="query"
+          maxLength="30"
+          placeholder="Pesquisar personagem"
+        />
+      </fieldset>
+    </form>
+    <Grid v-show="!isLoading" :characters="filteredListCharacter" />
     <button type="button" class="btn-action" @click="loadCharacters()">
       Carregar mais
     </button>
@@ -19,7 +32,8 @@ export default {
   name: 'Home',
   data() {
     return {
-      isLoading: false
+      isLoading: false,
+      query: ''
     }
   },
   components: { Loading, Grid },
@@ -29,19 +43,59 @@ export default {
   },
   methods: {
     ...mapActions(['getCharactersAction']),
-    // async getCharactersAction() {
-    //   if (this.isFirstLoad) return
-    //   // await this.$store.dispatch('characters/getCharactersAction')
-    //   this.getCharactersAction()
-    // },
     async loadCharacters() {
       this.isLoading = true
       await this.getCharactersAction(this.nextPage)
       this.isLoading = false
+    },
+    onSubmitForm(event) {
+      event.preventDefault()
     }
   },
   computed: {
-    ...mapGetters(['isFirstLoad', 'nextPage', 'characters'])
+    ...mapGetters(['isFirstLoad', 'nextPage', 'characters']),
+    filteredListCharacter() {
+      return this.characters.results.filter(character => {
+        return character.name.toLowerCase().includes(this.query.toLowerCase())
+      })
+    }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.wrapper {
+  margin-top: 80px;
+}
+.search-character {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+  width: 100%;
+  position: fixed;
+  padding: 20px;
+  background-color: #ccc;
+  top: 78px;
+  fieldset {
+    width: 100%;
+    font-size: 16px;
+    text-align: center;
+    legend {
+      padding: 0px 20px;
+      text-transform: uppercase;
+    }
+    border-radius: 10px;
+  }
+  input {
+    display: block;
+    width: 100%;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #000;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ccc;
+  }
+}
+</style>
