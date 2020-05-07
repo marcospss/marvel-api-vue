@@ -96,6 +96,7 @@ export default {
     background-color: #fff;
     background-clip: padding-box;
     border: 1px solid #ccc;
+    border-radius: 10px;
   }
 }
 </style>

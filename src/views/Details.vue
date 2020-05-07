@@ -9,7 +9,15 @@
         :alt="details.name"
       />
       <p>{{ details.description }}</p>
+      <button type="button" class="btn-edit" @click="toggleDisplayForm">
+        Editar Personagem
+      </button>
     </header>
+    <FormEditCharacter
+      v-if="displayForm"
+      @toggleDisplayForm="toggleDisplayForm"
+      :character="details"
+    />
     <SeriesGrid
       v-if="!isLoading && !!(series && series.results && series.results.length)"
       :series="series.results"
@@ -23,6 +31,7 @@ const { mapGetters, mapActions } = createNamespacedHelpers('details')
 
 import Loading from '@/components/Loading'
 import SeriesGrid from '@/components/SeriesGrid'
+import FormEditCharacter from '@/components/FormEditCharacter'
 
 export default {
   name: 'Details',
@@ -34,10 +43,11 @@ export default {
   },
   data() {
     return {
-      isLoading: false
+      isLoading: false,
+      displayForm: false
     }
   },
-  components: { Loading, SeriesGrid },
+  components: { Loading, SeriesGrid, FormEditCharacter },
   async created() {
     await this.loadDetails(this.id)
     await this.loadSeries(this.id)
@@ -55,6 +65,9 @@ export default {
     getPathImage(thumbnail) {
       const { path, extension } = thumbnail
       return `${path}.${extension}`
+    },
+    toggleDisplayForm() {
+      this.displayForm = !this.displayForm
     }
   },
   computed: {
@@ -109,6 +122,20 @@ export default {
     p {
       font-size: 16px;
     }
+  }
+  .btn-edit {
+    cursor: pointer;
+    width: 20%;
+    background: #ccc;
+    padding: 14px;
+    color: #111;
+    border-radius: 4px;
+    display: inline-block;
+    font-size: 14px;
+    border: none;
+    border-radius: 10px;
+    text-transform: uppercase;
+    font-weight: bold;
   }
 }
 </style>
