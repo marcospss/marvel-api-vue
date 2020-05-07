@@ -33,8 +33,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      query: '',
-      results: []
+      query: ''
     }
   },
   components: { Loading, Grid },
@@ -54,7 +53,6 @@ export default {
       const positionScrollY = this.handleScroll()
       this.isLoading = true
       await this.getCharactersAction(this.nextPage)
-      this.results.push(...this.characters.results)
       setTimeout(() => {
         window.scrollTo({
           top: positionScrollY,
@@ -73,7 +71,7 @@ export default {
   computed: {
     ...mapGetters(['isFirstLoad', 'nextPage', 'characters']),
     filteredListCharacter() {
-      return this.results.filter(character => {
+      return this.characters.results.filter(character => {
         return character.name.toLowerCase().includes(this.query.toLowerCase())
       })
     }
