@@ -27,7 +27,11 @@
       <button type="button" class="btn-save" @click="triggerSaveEdit">
         Salvar Edição
       </button>
-      <div v-if="alertMessage.message" class="message">
+      <div
+        v-if="alertMessage.message"
+        class="message"
+        :class="alertMessage.type"
+      >
         {{ alertMessage.message }}
       </div>
     </form>
@@ -191,12 +195,19 @@ export default {
   .message {
     width: 100%;
     text-align: center;
-    color: #721c24;
-    background-color: #dff8d7;
     padding: 20px;
     margin: 20px;
     border: 1px solid transparent;
     border-radius: 10px;
+    font-weight: bold;
+    &.success {
+      color: #000;
+      background-color: #dff8d7;
+    }
+    &.error {
+      color: #721c24;
+      background-color: #f8d7da;
+    }
   }
 }
 </style>
