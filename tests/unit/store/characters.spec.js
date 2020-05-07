@@ -43,7 +43,7 @@ describe('CHARACTERS - Store', () => {
         results: []
       }
       characters.mutations[CHARACTERS.GET_LIST](state, response)
-      expect(state.characters.offset).toEqual(10)
+      expect(state.characters.offset).toEqual(0)
       expect(state.characters.limit).toEqual(10)
       expect(state.characters.total).toEqual(0)
       expect(state.characters.count).toEqual(0)
@@ -105,7 +105,9 @@ describe('CHARACTERS - Store', () => {
             }
           }
         ]
-      }
+      },
+      isFirstLoad: false,
+      nextPage: 0
     }
 
     it('getters/characters', () => {
@@ -128,8 +130,8 @@ describe('CHARACTERS - Store', () => {
         ]
       })
     })
-    it('getters/getCharactersNextPage', () => {
-      expect(characters.getters.getCharactersNextPage(state)).toEqual(0)
+    it('getters/nextPage', () => {
+      expect(characters.getters.nextPage(state)).toEqual(0)
     })
   })
 })
