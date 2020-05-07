@@ -33,7 +33,8 @@ export default {
   data() {
     return {
       isLoading: false,
-      query: ''
+      query: '',
+      results: []
     }
   },
   components: { Loading, Grid },
@@ -41,21 +42,38 @@ export default {
     if (this.isFirstLoad) return
     await this.loadCharacters()
   },
+  mounted() {
+    document.addEventListener('scroll', this.handleScroll)
+  },
+  destroyed() {
+    document.addEventListener('scroll', this.handleScroll)
+  },
   methods: {
     ...mapActions(['getCharactersAction']),
     async loadCharacters() {
+      const positionScrollY = this.handleScroll()
       this.isLoading = true
       await this.getCharactersAction(this.nextPage)
+      this.results.push(...this.characters.results)
+      setTimeout(() => {
+        window.scrollTo({
+          top: positionScrollY,
+          behavior: 'smooth'
+        })
+      }, 1000)
       this.isLoading = false
     },
     onSubmitForm(event) {
       event.preventDefault()
+    },
+    handleScroll() {
+      return window !== undefined && window.scrollY
     }
   },
   computed: {
     ...mapGetters(['isFirstLoad', 'nextPage', 'characters']),
     filteredListCharacter() {
-      return this.characters.results.filter(character => {
+      return this.results.filter(character => {
         return character.name.toLowerCase().includes(this.query.toLowerCase())
       })
     }
