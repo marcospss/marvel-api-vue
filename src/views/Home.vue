@@ -6,7 +6,7 @@
         <legend>Pesquisar personagem</legend>
         <input
           v-model="query"
-          type="text"
+          type="search"
           name="query"
           id="query"
           maxLength="30"
