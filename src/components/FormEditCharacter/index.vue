@@ -1,13 +1,21 @@
 <template>
   <div class="form-edit-character">
     <form>
-      <button type="button" class="btn-close" @click="triggerCloseForm">
+      <button
+        data-cy="btn-close-form"
+        type="button"
+        class="btn-close"
+        @click="triggerCloseForm"
+      >
         X
       </button>
-      <h2><span>Editando o personagem:</span> {{ editingCharacter.name }}</h2>
+      <h2 data-cy="title-form">
+        <span>Editando o personagem:</span> {{ editingCharacter.name }}
+      </h2>
       <fieldset>
         <legend>Pesquisar personagem</legend>
         <input
+          data-cy="input-name"
           type="text"
           name="name"
           required
@@ -17,6 +25,7 @@
       <fieldset v-if="editingCharacter.description">
         <legend>Descrição do personagem</legend>
         <textarea
+          data-cy="input-description"
           name="description"
           cols="30"
           rows="3"
@@ -24,10 +33,16 @@
           v-model="editingCharacter.description"
         />
       </fieldset>
-      <button type="button" class="btn-save" @click="triggerSaveEdit">
+      <button
+        data-cy="btn-save-edition"
+        type="button"
+        class="btn-save"
+        @click="triggerSaveEdit"
+      >
         Salvar Edição
       </button>
       <div
+        data-cy="alert-message"
         v-if="alertMessage.message"
         class="message"
         :class="alertMessage.type"

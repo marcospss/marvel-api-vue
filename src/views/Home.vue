@@ -5,6 +5,7 @@
       <fieldset>
         <legend>Pesquisar personagem</legend>
         <input
+          data-cy="input-search"
           v-model="query"
           type="search"
           name="query"
@@ -15,7 +16,12 @@
       </fieldset>
     </form>
     <Grid v-show="!isLoading" :characters="filteredListCharacter" />
-    <button type="button" class="btn-action" @click="loadCharacters()">
+    <button
+      data-cy="btn-load-more"
+      type="button"
+      class="btn-action"
+      @click="loadCharacters()"
+    >
       Carregar mais
     </button>
   </div>

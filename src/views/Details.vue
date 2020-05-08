@@ -2,23 +2,31 @@
   <div class="details">
     <Loading v-if="isLoading" />
     <header v-show="!isLoading">
-      <router-link to="/">Voltar para home</router-link>
-      <h2>{{ details.name }}</h2>
+      <router-link data-cy="btn-back-home" to="/">Voltar para home</router-link>
+      <h2 data-cy="title">{{ details.name }}</h2>
       <img
+        data-cy="image"
         :src="details.thumbnail && getPathImage(details.thumbnail)"
         :alt="details.name"
       />
-      <p>{{ details.description }}</p>
-      <button type="button" class="btn-edit" @click="toggleDisplayForm">
+      <p data-cy="description">{{ details.description }}</p>
+      <button
+        data-cy="edit-character"
+        type="button"
+        class="btn-edit"
+        @click="toggleDisplayForm"
+      >
         Editar Personagem
       </button>
     </header>
     <FormEditCharacter
+      data-cy="form-edit-character"
       v-if="displayForm"
       @toggleDisplayForm="toggleDisplayForm"
       :character="details"
     />
     <SeriesGrid
+      data-cy="series"
       v-if="!isLoading && !!(series && series.results && series.results.length)"
       :series="series.results"
     />

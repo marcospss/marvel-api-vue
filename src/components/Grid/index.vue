@@ -1,6 +1,10 @@
 <template>
-  <div class="grid">
-    <figure v-for="character in characters" :key="character.id">
+  <div data-cy="grid-characters" class="grid">
+    <figure
+      v-for="character in characters"
+      :key="character.id"
+      :data-cy="'character-' + character.id"
+    >
       <router-link
         tag="a"
         :to="{ name: 'Details', params: { id: character.id } }"
